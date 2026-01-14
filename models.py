@@ -60,14 +60,14 @@ class HeroPower(db.Model, SerializerMixin):
     hero_id = db.Column(db.Integer, db.ForeignKey("heros.id"))
     power_id =  db.Column(db.Integer, db.ForeignKey("powers.id"))
 
-    # defines population relationship between her0_powers and all other tables
+    # defines population relationship between hero_powers and all other tables
     hero = relationship("Hero", back_populates='hero_powers')
     power = relationship("Power", back_populates='hero_powers')
 
     # serilization rules to avoid reccursion errors
     serialize_rules = ("-hero.hero_powers", "-power.hero_powers", )
 
-    # validation for strength input; validates if strength is one of the 3 options(weak, average, strong)
+    # validation for strength input; validates if strength is one of the three, weak, average, strong
     @validates('strength')
     def validate_strength(self, key, value):
         if value not in ('Strong', 'Weak', 'Average'):
